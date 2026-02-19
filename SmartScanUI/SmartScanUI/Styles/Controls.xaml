@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="Margin" Value="6,4"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+
+    <Style TargetType="ToggleButton" x:Key="ToggleSwitch">
+        <Setter Property="Width" Value="56"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <Border x:Name="SwitchTrack" CornerRadius="14" Background="#D0D0D0"/>
+                        <Ellipse x:Name="SwitchThumb" Width="22" Height="22" Fill="White" Margin="3"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="SwitchTrack" Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                            <Setter TargetName="SwitchThumb" Property="Margin" Value="31,3,3,3"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ComboBox">
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Margin" Value="6"/>
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="Width" Value="300"/>
+        <Setter Property="Margin" Value="6"/>
+    </Style>
+</ResourceDictionary>

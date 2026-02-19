@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="ScannerAdminApp.Views.AdvancedSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Background="White" Padding="16" CornerRadius="6">
+        <StackPanel>
+            <TextBlock Text="Advanced Settings" Style="{StaticResource SectionTitle}"/>
+            <TextBlock Text="Fine-tune scanner performance and behavior" Foreground="Gray" Margin="0,0,0,12"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Auto-Feed Detection" VerticalAlignment="Center"/>
+                <ToggleButton Grid.Row="0" Grid.Column="1" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding AutoFeedDetection}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Blank Page Removal" VerticalAlignment="Center" Margin="0,12,0,0"/>
+                <ToggleButton Grid.Row="1" Grid.Column="1" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding BlankPageRemoval}" Margin="0,12,0,0"/>
+            </Grid>
+        </StackPanel>
+    </Border>
+</UserControl>

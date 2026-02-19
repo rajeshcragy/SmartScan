@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Color x:Key="PrimaryColor">#007ACC</Color>
+    <Color x:Key="SidebarBg">#2D2D30</Color>
+    <Color x:Key="Surface">#F7F7F8</Color>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
+    <SolidColorBrush x:Key="SidebarBrush" Color="{StaticResource SidebarBg}"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}"/>
+</ResourceDictionary>
