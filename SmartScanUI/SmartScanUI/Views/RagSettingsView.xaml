@@ -1,0 +1,129 @@
+<UserControl x:Class="ScannerAdminApp.Views.RagSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Background="White" Padding="16" CornerRadius="6" Margin="0,12,0,0">
+        <StackPanel>
+            <TextBlock Text="AI Assistant (RAG)" Style="{StaticResource HeaderText}"/>
+            <TextBlock Foreground="Gray" Margin="0,0,0,16" TextWrapping="Wrap">
+                Query your scanned documents using a local GPU-accelerated language model.
+                Powered by <Bold>Ollama</Bold> — no data leaves your PC.
+            </TextBlock>
+
+            <!-- ── LLM Configuration ─────────────────────────────────────── -->
+            <TextBlock Text="LLM CONFIGURATION" Style="{StaticResource SectionTitle}"/>
+
+            <Grid Margin="0,4,0,8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="OLLAMA ENDPOINT" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding OllamaEndpoint, UpdateSourceTrigger=PropertyChanged}"
+                           Width="Auto" HorizontalAlignment="Stretch" Margin="6"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="LLM MODEL" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <TextBox   Grid.Row="1" Grid.Column="1" Text="{Binding LlmModel, UpdateSourceTrigger=PropertyChanged}"
+                           Width="Auto" HorizontalAlignment="Stretch" Margin="6"
+                           ToolTip="E.g. llama3.2, mistral, gemma3. Run 'ollama pull &lt;model&gt;' first."/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="EMBEDDING MODEL" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <TextBox   Grid.Row="2" Grid.Column="1" Text="{Binding EmbeddingModel, UpdateSourceTrigger=PropertyChanged}"
+                           Width="Auto" HorizontalAlignment="Stretch" Margin="6"
+                           ToolTip="E.g. nomic-embed-text, mxbai-embed-large. Run 'ollama pull &lt;model&gt;' first."/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="GPU DEVICE (CUDA)" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox Text="{Binding GpuDevice, UpdateSourceTrigger=PropertyChanged}"
+                             Width="60" Margin="6"
+                             ToolTip="CUDA device index (0, 1, …). Start Ollama with: CUDA_VISIBLE_DEVICES=0 ollama serve"/>
+                    <TextBlock VerticalAlignment="Center" FontSize="11" Foreground="Gray"
+                               ToolTip="Start Ollama with: CUDA_VISIBLE_DEVICES=0 ollama serve">
+                        Launch Ollama with: <Bold>CUDA_VISIBLE_DEVICES=<Run Text="{Binding GpuDevice}"/> ollama serve</Bold>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+
+            <Button Content="TEST CONNECTION"
+                    Command="{Binding TestConnectionCommand}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    HorizontalAlignment="Left"/>
+
+            <!-- ── Document Indexing ─────────────────────────────────────── -->
+            <TextBlock Text="DOCUMENT INDEXING" Style="{StaticResource SectionTitle}"/>
+            <TextBlock Foreground="Gray" FontSize="11" Margin="0,0,0,8" TextWrapping="Wrap">
+                Supported file types: .txt, .md, .csv — sub-folders are included.
+                PDF files can be pre-converted to .txt using any tool.
+            </TextBlock>
+
+            <Grid Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="DOCUMENTS FOLDER" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <TextBox   Grid.Column="1" Text="{Binding DocumentsFolder, UpdateSourceTrigger=PropertyChanged}"
+                           Width="Auto" HorizontalAlignment="Stretch" Margin="6"
+                           ToolTip="Folder containing your scanned documents (.txt, .md, .csv)"/>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <Button Content="INDEX DOCUMENTS"
+                        Command="{Binding IndexDocumentsCommand}"
+                        IsEnabled="{Binding IsNotBusy}"/>
+                <Button Content="CLEAR INDEX"
+                        Command="{Binding ClearIndexCommand}"
+                        IsEnabled="{Binding IsNotBusy}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="6,2,0,8">
+                <TextBlock Text="{Binding IndexedChunkCount, StringFormat='Indexed chunks: {0}'}"
+                           Foreground="Gray" FontSize="11"/>
+            </StackPanel>
+
+            <!-- Status bar -->
+            <Border Background="#F0F4F8" CornerRadius="4" Padding="10,6" Margin="0,0,0,12">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="●" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="12" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ── AI Query ───────────────────────────────────────────────── -->
+            <TextBlock Text="ASK YOUR DOCUMENTS" Style="{StaticResource SectionTitle}"/>
+            <TextBlock Foreground="Gray" FontSize="11" Margin="0,0,0,8">
+                Type your question and the AI will answer using your indexed documents as context.
+            </TextBlock>
+
+            <TextBox Text="{Binding QueryText, UpdateSourceTrigger=PropertyChanged}"
+                     Width="Auto" HorizontalAlignment="Stretch"
+                     MinHeight="60" MaxHeight="120"
+                     TextWrapping="Wrap" AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     Margin="0,0,0,8"
+                     ToolTip="Press the Send Query button or use the command below"/>
+
+            <Button Content="SEND QUERY"
+                    Command="{Binding SendQueryCommand}"
+                    IsEnabled="{Binding CanSendQuery}"
+                    HorizontalAlignment="Left"/>
+
+            <!-- Response area -->
+            <Border Background="#F5F5F5" CornerRadius="4" Padding="12" Margin="0,8,0,0">
+                <ScrollViewer MaxHeight="240" VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding ResponseText}"
+                               TextWrapping="Wrap"
+                               FontSize="13"
+                               LineHeight="20"/>
+                </ScrollViewer>
+            </Border>
+
+        </StackPanel>
+    </Border>
+</UserControl>

@@ -7,5 +7,7 @@
         <Button Content="Users" />
         <Button Content="Output Paths" />
         <Button Content="Preferences" />
+        <Separator Margin="6,12" Background="#555"/>
+        <Button Content="AI Assistant" />
     </StackPanel>
 </UserControl>

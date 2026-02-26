@@ -6,13 +6,15 @@ namespace ScannerAdminApp.ViewModels
     {
         public ScannerConfigViewModel ScannerConfig { get; }
         public AdvancedSettingsViewModel AdvancedSettings { get; }
+        public RagSettingsViewModel RagSettings { get; }
         public SidebarViewModel Sidebar { get; }
 
         public MainViewModel()
         {
-            ScannerConfig = new ScannerConfigViewModel();
+            ScannerConfig    = new ScannerConfigViewModel();
             AdvancedSettings = new AdvancedSettingsViewModel();
-            Sidebar = new SidebarViewModel();
+            RagSettings      = new RagSettingsViewModel();
+            Sidebar          = new SidebarViewModel();
         }
     }
 }

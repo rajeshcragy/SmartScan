@@ -40,6 +40,7 @@
                 <StackPanel>
                     <views:ScannerConfigView DataContext="{Binding ScannerConfig}"/>
                     <views:AdvancedSettingsView DataContext="{Binding AdvancedSettings}"/>
+                    <views:RagSettingsView DataContext="{Binding RagSettings}"/>
                 </StackPanel>
             </ScrollViewer>
 
